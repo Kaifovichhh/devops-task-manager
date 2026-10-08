@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop, "feature/**"]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Lint (flake8)
+        run: flake8 app tests wsgi.py
+      - name: Unit tests + coverage
+        run: pytest -v --cov=app --cov-report=term-missing --cov-fail-under=80
+
+  docker:
+    name: Docker build & smoke test
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image (runs tests in stage 1)
+        run: docker build -t task-manager-api:ci .
+      - name: Run container
+        run: docker run -d --name api -p 5000:5000 task-manager-api:ci
+      - name: Smoke test
+        run: |
+          for i in $(seq 1 15); do
+            curl -sf http://localhost:5000/health && break
+            sleep 1
+          done
+          curl -sf -X POST http://localhost:5000/tasks \
+               -H "Content-Type: application/json" -d '{"title":"CI smoke"}'
+          curl -sf http://localhost:5000/tasks | grep "CI smoke"
+      - name: Container logs
+        if: always()
+        run: docker logs api

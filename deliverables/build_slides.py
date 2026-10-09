@@ -93,7 +93,7 @@ text(s, 0.8, 1.9, 8.2, 1.8, "Task Manager API", 54, WHITE, True, HEAD)
 text(s, 0.8, 3.15, 8, 1, "A containerised REST service for team task management — "
      "built with Git Flow, TDD, Docker and GitHub Actions", 20, LIGHT)
 text(s, 0.8, 5.3, 8, 0.4, "Team TaskOps", 18, ORANGE, True)
-text(s, 0.8, 5.8, 9, 0.4, "Student 1 · Student 2 · Student 3", 16, LIGHT)
+text(s, 0.8, 5.8, 9, 0.4, "Rakhat · Danas · Nurlan", 16, LIGHT)
 text(s, 0.8, 6.3, 9, 0.4, REPO, 14, MINT, font=MONO)
 notes(s, "Introduce the team and the project in one sentence.")
 
@@ -143,11 +143,11 @@ s = prs.slides.add_slide(BLANK)
 bg(s, WHITE)
 title(s, "Three roles, three branches, clear ownership", "Team members & roles")
 team = [
-    ("S1", "Student 1", "Team Lead · Backend", "feature/tasks-api",
+    ("R", "Rakhat", "Team Lead · Backend", "feature/tasks-api",
      ["REST endpoints & validation", "App factory, error handling", "Code review, merges to main"]),
-    ("S2", "Student 2", "QA · Database", "feature/storage-tests",
+    ("D", "Danas", "QA · Database", "feature/storage-tests",
      ["SQLite storage layer", "Test plan: 15 test cases", "pytest + coverage ≥ 80 %"]),
-    ("S3", "Student 3", "DevOps engineer", "feature/docker-ci",
+    ("N", "Nurlan", "DevOps engineer", "feature/docker-ci",
      ["Multi-stage Dockerfile", "docker-compose + volume", "GitHub Actions pipeline"]),
 ]
 for i, (ini, name, role, br, tasks) in enumerate(team):
@@ -205,8 +205,8 @@ pts = [(2.5, 2.2, NAVY), (8.7, 2.2, NAVY), (3.2, 3.4, TEAL), (4.6, 3.4, TEAL), (
 for x, y, c in pts:
     box(s, x - 0.15, y - 0.15, 0.3, 0.3, c, MSO_SHAPE.OVAL)
 text(s, 8.25, 1.65, 1.5, 0.3, "v1.0.0", 12, NAVY, True)
-for x, lbl in [(4.0, "S2 storage"), (5.4, "S1 api"), (6.8, "S3 docker-ci")]:
-    text(s, x - 0.7, 4.85, 1.4, 0.3, lbl, 11, MUTED, align=PP_ALIGN.CENTER)
+for x, lbl in [(4.0, ["Danas", "storage"]), (5.4, ["Rakhat", "api"]), (6.8, ["Nurlan", "docker-ci"])]:
+    text(s, x - 0.7, 4.85, 1.4, 0.5, lbl, 11, MUTED, align=PP_ALIGN.CENTER)
 box(s, 9.6, 1.85, 3.15, 3.4, WHITE)
 text(s, 9.85, 2.05, 2.7, 3.1, ["Rules on main", "• no direct push", "• PR + 1 review",
                                 "• CI must be green", "• releases are tagged"], 14, INK)

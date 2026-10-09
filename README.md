@@ -20,9 +20,9 @@ Git branching, automated tests, Docker containerisation and a CI pipeline on Git
 
 | Member | Role | Branch | Owns |
 |---|---|---|---|
-| Student 1 | Team Lead / Backend developer | `feature/tasks-api` | `app/routes.py`, `app/__init__.py` |
-| Student 2 | QA engineer / Database | `feature/storage-tests` | `app/storage.py`, `tests/` |
-| Student 3 | DevOps engineer | `feature/docker-ci` | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
+| Rakhat | Team Lead / Backend developer | `feature/tasks-api` | `app/routes.py`, `app/__init__.py` |
+| Danas | QA engineer / Database | `feature/storage-tests` | `app/storage.py`, `tests/` |
+| Nurlan | DevOps engineer | `feature/docker-ci` | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
 
 ## Quick start
 

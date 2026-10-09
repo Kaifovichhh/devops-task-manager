@@ -1,6 +1,6 @@
 """SQLite storage layer for tasks.
 
-Owner: Student 2 (QA / Database). Branch: feature/storage-tests
+Owner: Danas (QA / Database). Branch: feature/storage-tests
 """
 import sqlite3
 from datetime import datetime, timezone

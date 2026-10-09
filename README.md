@@ -11,7 +11,7 @@ Git branching, automated tests, Docker containerisation and a CI pipeline on Git
 | Language | Python 3.12 (works on 3.9+) |
 | Framework | Flask 3 + Gunicorn |
 | Database | SQLite (stored in a Docker volume) |
-| Tests | pytest + pytest-cov (17 tests, ~97 % coverage) |
+| Tests | pytest + pytest-cov (18 tests, ~97 % coverage) |
 | Lint | flake8 |
 | Container | Docker (multi-stage) + Docker Compose |
 | CI | GitHub Actions (`.github/workflows/ci.yml`) |
@@ -42,7 +42,7 @@ Use `docker compose down -v` to wipe the data.
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements-dev.txt
-python wsgi.py              # http://localhost:5000
+python wsgi.py              # http://localhost:5000  (on macOS use PORT=8000, 5000 is taken by AirPlay)
 ```
 
 ### Run the tests
@@ -56,6 +56,7 @@ pytest -v --cov=app
 
 | Method | Endpoint | Description | Success |
 |---|---|---|---|
+| GET | `/` | Web UI (open in a browser) | 200 |
 | GET | `/health` | Service + DB health (used by Docker HEALTHCHECK) | 200 |
 | GET | `/tasks` | List tasks, optional `?status=todo\|in_progress\|done` | 200 |
 | POST | `/tasks` | Create task `{"title", "description"?, "priority"?}` | 201 |
@@ -81,6 +82,7 @@ app/
   __init__.py        application factory (create_app)
   routes.py          REST endpoints + input validation
   storage.py         SQLite repository
+  static/index.html  web UI (vanilla JS, calls the API with fetch)
 tests/
   test_api.py        API tests TC-01..TC-12
   test_storage.py    storage tests TC-13..TC-15

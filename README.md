@@ -22,7 +22,7 @@ Git branching, automated tests, Docker containerisation and a CI pipeline on Git
 |---|---|---|---|
 | Rakhat | Team Lead / Backend developer | `feature/tasks-api` | `app/routes.py`, `app/__init__.py` |
 | Danas | QA engineer / Database | `feature/storage-tests` | `app/storage.py`, `tests/` |
-| Nurlan | DevOps engineer | `feature/docker-ci` | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
+| Nurlan ([@Rsesds](https://github.com/Rsesds)) | DevOps engineer | `feature/docker-ci` | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
 
 ## Quick start
 

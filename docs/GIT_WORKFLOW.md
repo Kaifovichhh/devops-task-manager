@@ -27,7 +27,7 @@ git init
 git checkout -b main
 git add README.md .gitignore requirements.txt
 git commit -m "chore: initial project skeleton"
-git remote add origin https://github.com/<user>/devops-task-manager.git
+git remote add origin https://github.com/Kaifovichhh/devops-task-manager.git
 git push -u origin main
 ```
 

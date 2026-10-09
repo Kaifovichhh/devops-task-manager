@@ -19,6 +19,7 @@ RUN useradd --create-home --uid 1000 appuser && mkdir -p /data && chown appuser 
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+# Ship only the app in runtime; tests stay in the test stage
 COPY app ./app
 COPY wsgi.py .
 

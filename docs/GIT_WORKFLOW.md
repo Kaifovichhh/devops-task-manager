@@ -7,9 +7,9 @@ main ────●────────────────────
           \                            /
 develop    ●──────●───────●───────●───●       (integration branch)
             \    /       /       /
-feature/tasks-api       /       /             Student 1
-             feature/storage-tests            Student 2
-                         feature/docker-ci    Student 3
+feature/tasks-api       /       /             Rakhat
+             feature/storage-tests            Danas
+                         feature/docker-ci    Nurlan
 ```
 
 ## Branches

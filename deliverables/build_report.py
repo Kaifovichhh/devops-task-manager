@@ -82,7 +82,7 @@ title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 para("DevOps", "Course: ")
 para("Team TaskOps", "Team Name: ")
 para("Task Manager API — a containerised REST service for team task management", "Project: ")
-para("Student 1, Student 2, Student 3", "Team members: ")
+para("Rakhat, Danas, Nurlan", "Team members: ")
 
 doc.add_heading("Project Goal", 1)
 para("Small student and IT teams often track work in chats and spreadsheets, so tasks get lost, "
@@ -116,9 +116,9 @@ table(["User Story", "Description"], [
 
 doc.add_heading("Team member roles and their goals", 1)
 table(["Team member", "Role and assigned tasks"], [
-    ("Student 1", "Team Lead / Backend developer. Branch feature/tasks-api. Designs the REST API, implements endpoints (US-1…US-6) and input validation in app/routes.py, application factory in app/__init__.py; reviews and merges Pull Requests; protects main."),
-    ("Student 2", "QA engineer / Database. Branch feature/storage-tests. Implements the SQLite storage layer app/storage.py (US-7), writes the test plan (docs/TEST_CASES.md) and automated pytest tests, controls coverage ≥ 80 %."),
-    ("Student 3", "DevOps engineer. Branch feature/docker-ci. Writes the multi-stage Dockerfile, docker-compose.yml with a volume and healthcheck (US-8), GitHub Actions pipeline (US-9), .dockerignore; prepares the Docker part of the presentation."),
+    ("Rakhat", "Team Lead / Backend developer. Branch feature/tasks-api. Designs the REST API, implements endpoints (US-1…US-6) and input validation in app/routes.py, application factory in app/__init__.py; reviews and merges Pull Requests; protects main."),
+    ("Danas", "QA engineer / Database. Branch feature/storage-tests. Implements the SQLite storage layer app/storage.py (US-7), writes the test plan (docs/TEST_CASES.md) and automated pytest tests, controls coverage ≥ 80 %."),
+    ("Nurlan", "DevOps engineer. Branch feature/docker-ci. Writes the multi-stage Dockerfile, docker-compose.yml with a volume and healthcheck (US-8), GitHub Actions pipeline (US-9), .dockerignore; prepares the Docker part of the presentation."),
 ], widths=[3, 13.5])
 
 doc.add_heading("Proof of concept (test-driven approach)", 1)
@@ -126,9 +126,9 @@ para("Each member first wrote the test that describes the expected behaviour, sa
      "implemented the code until it passed (green) and then refactored. All tests run automatically "
      "in GitHub Actions on every push and inside the Docker build.")
 bullets([
-    ("Student 1 (API): ", "API tests with the Flask test client — e.g. TC-02 POST /tasks returns 201 and status “todo”; TC-03/04 invalid input returns 400; TC-08/11 unknown id returns 404; TC-09 PATCH changes status to “done”. Success = all API tests green."),
-    ("Student 2 (Storage / QA): ", "Unit tests on a temporary database — TC-13 data survives re-opening the DB file (simulates a container restart); TC-14 unknown fields are ignored on update; TC-15 missing task returns None/False. Success = tests green and coverage ≥ 80 % (actual 97 %)."),
-    ("Student 3 (DevOps): ", "Infrastructure checks — TC-D1 docker build fails if a test fails (tests run in the build stage); TC-D2 container becomes “healthy”; TC-D3 tasks remain after docker compose down/up; TC-D4 container runs as non-root user; TC-D5 CI smoke test creates a task through curl. Success = green GitHub Actions run."),
+    ("Rakhat (API): ", "API tests with the Flask test client — e.g. TC-02 POST /tasks returns 201 and status “todo”; TC-03/04 invalid input returns 400; TC-08/11 unknown id returns 404; TC-09 PATCH changes status to “done”. Success = all API tests green."),
+    ("Danas (Storage / QA): ", "Unit tests on a temporary database — TC-13 data survives re-opening the DB file (simulates a container restart); TC-14 unknown fields are ignored on update; TC-15 missing task returns None/False. Success = tests green and coverage ≥ 80 % (actual 97 %)."),
+    ("Nurlan (DevOps): ", "Infrastructure checks — TC-D1 docker build fails if a test fails (tests run in the build stage); TC-D2 container becomes “healthy”; TC-D3 tasks remain after docker compose down/up; TC-D4 container runs as non-root user; TC-D5 CI smoke test creates a task through curl. Success = green GitHub Actions run."),
 ])
 
 doc.add_heading("Using GitHub for Collaboration", 1)
@@ -154,9 +154,9 @@ code("git checkout develop && git pull\ngit checkout -b feature/docker-ci\n"
 table(["Branch", "Owner", "Content"], [
     ("main", "Team Lead", "Stable releases (tag v1.0.0)"),
     ("develop", "All", "Integration branch"),
-    ("feature/tasks-api", "Student 1", "app/routes.py, app/__init__.py, wsgi.py"),
-    ("feature/storage-tests", "Student 2", "app/storage.py, tests/"),
-    ("feature/docker-ci", "Student 3", "Dockerfile, docker-compose.yml, .github/workflows/ci.yml"),
+    ("feature/tasks-api", "Rakhat", "app/routes.py, app/__init__.py, wsgi.py"),
+    ("feature/storage-tests", "Danas", "app/storage.py, tests/"),
+    ("feature/docker-ci", "Nurlan", "Dockerfile, docker-compose.yml, .github/workflows/ci.yml"),
 ], widths=[4.5, 3, 9])
 
 doc.add_heading("Describe your team's application", 1)
@@ -166,9 +166,9 @@ para("For Sprint 1 we chose the minimum set of features that makes the service u
      "persistent storage, Docker and CI. Authentication, PostgreSQL, CD and monitoring were moved to "
      "the backlog.")
 bullets([
-    ("Student 1 – code: ", "REST endpoints GET/POST /tasks, GET/PATCH/DELETE /tasks/<id>, GET /stats, GET /health, JSON validation and JSON error responses. Expected result: API answers with correct codes 200/201/204/400/404."),
-    ("Student 2 – code + documents: ", "SQLite repository (create, get, list, update, delete, stats), test plan with 15 test cases and their automation. Expected result: data is stored safely and every feature is covered by tests."),
-    ("Student 3 – code + documents: ", "Dockerfile, docker-compose.yml, CI workflow, run instructions in README. Expected result: one command starts the app; every push is checked automatically."),
+    ("Rakhat – code: ", "REST endpoints GET/POST /tasks, GET/PATCH/DELETE /tasks/<id>, GET /stats, GET /health, JSON validation and JSON error responses. Expected result: API answers with correct codes 200/201/204/400/404."),
+    ("Danas – code + documents: ", "SQLite repository (create, get, list, update, delete, stats), test plan with 15 test cases and their automation. Expected result: data is stored safely and every feature is covered by tests."),
+    ("Nurlan – code + documents: ", "Dockerfile, docker-compose.yml, CI workflow, run instructions in README. Expected result: one command starts the app; every push is checked automatically."),
 ])
 doc.add_heading("Specific objectives and how we test them", 2)
 table(["Feature", "Objective", "Test method", "Expected result"], [

@@ -1,6 +1,6 @@
 """REST API endpoints.
 
-Owner: Student 1 (Team Lead / Backend). Branch: feature/tasks-api
+Owner: Rakhat (Team Lead / Backend). Branch: feature/tasks-api
 """
 from flask import Blueprint, current_app, jsonify, request
 

@@ -1,5 +1,7 @@
 # Task Manager API — DevOps Team Project
 
+![CI](https://github.com/Kaifovichhh/devops-task-manager/actions/workflows/ci.yml/badge.svg)
+
 A small REST API for managing team tasks (create, list, filter, update, delete, statistics).
 The goal of the project is **not** the business logic itself but the full DevOps lifecycle around it:
 Git branching, automated tests, Docker containerisation and a CI pipeline on GitHub Actions.
@@ -18,9 +20,9 @@ Git branching, automated tests, Docker containerisation and a CI pipeline on Git
 
 | Member | Role | Branch | Owns |
 |---|---|---|---|
-| Student 1 | Team Lead / Backend developer | `feature/tasks-api` | `app/routes.py`, `app/__init__.py` |
-| Student 2 | QA engineer / Database | `feature/storage-tests` | `app/storage.py`, `tests/` |
-| Student 3 | DevOps engineer | `feature/docker-ci` | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
+| Rakhat | Team Lead / Backend developer | `feature/tasks-api` | `app/routes.py`, `app/__init__.py` |
+| Danas | QA engineer / Database | `feature/storage-tests` | `app/storage.py`, `tests/` |
+| Nurlan | DevOps engineer | `feature/docker-ci` | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` |
 
 ## Quick start
 
@@ -95,3 +97,5 @@ docs/                Git workflow, test cases, backlog
 2. Pick an item from [docs/BACKLOG.md](docs/BACKLOG.md).
 3. Add tests for every new feature in `tests/` (see [docs/TEST_CASES.md](docs/TEST_CASES.md)).
 4. CI must be green before merging.
+
+**Repository:** https://github.com/Kaifovichhh/devops-task-manager

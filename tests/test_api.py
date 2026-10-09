@@ -1,4 +1,4 @@
-"""API tests (TC-01 ... TC-12). Owner: Student 1 + Student 2."""
+"""API tests (TC-01 ... TC-12). Owner: Rakhat + Danas."""
 
 
 def _create(client, **kwargs):

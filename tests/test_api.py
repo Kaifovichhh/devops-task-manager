@@ -107,3 +107,11 @@ def test_unknown_route_returns_json_404(client):
     resp = client.get("/nope")
     assert resp.status_code == 404
     assert resp.get_json() == {"error": "Not found"}
+
+
+# TC-16: web UI is served on the root URL
+def test_web_ui_index(client):
+    resp = client.get("/")
+    assert resp.status_code == 200
+    assert resp.mimetype == "text/html"
+    assert b"Task Manager" in resp.data

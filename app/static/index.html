@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task Manager</title>
+<style>
+  :root {
+    --bg: #f4f7f8; --card: #ffffff; --ink: #1e2933; --muted: #5b6b78; --line: #dde5e8;
+    --teal: #0b8a8f; --teal-soft: #e3f3f3; --orange: #f28c28; --navy: #0f1e2e; --red: #c0392b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1e2e; --card: #182e44; --ink: #eef4f5; --muted: #9fb3c0; --line: #27425a;
+      --teal: #3fb8b3; --teal-soft: #1d3b4d; --navy: #0b1622;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+         background: var(--bg); color: var(--ink); }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+           flex-wrap: wrap; margin-bottom: 24px; }
+  h1 { margin: 0; font: 700 28px/1.2 Cambria, Georgia, serif; }
+  .health { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+  .dot.ok { background: #2ecc71; } .dot.err { background: var(--red); }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .stat b { display: block; font: 700 28px/1 Cambria, Georgia, serif; color: var(--teal); }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  form { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px;
+         display: grid; grid-template-columns: 1fr 140px auto; gap: 10px; margin-bottom: 20px; }
+  form .desc { grid-column: 1 / -1; }
+  input, select, button { font: inherit; color: inherit; }
+  input, select { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px;
+                  background: var(--bg); }
+  button { cursor: pointer; border: 0; border-radius: 8px; padding: 9px 16px; font-weight: 600; }
+  .primary { background: var(--teal); color: #fff; }
+  .error { grid-column: 1 / -1; color: var(--red); font-size: 13px; min-height: 0; margin: 0; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tab { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+  .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+       display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center; }
+  li.done .title { text-decoration: line-through; color: var(--muted); }
+  .check { width: 20px; height: 20px; accent-color: var(--teal); }
+  .title { font-weight: 600; word-break: break-word; }
+  .meta { font-size: 12px; color: var(--muted); }
+  .prio { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+  .prio.high { background: #fde7d3; color: #9a4a00; }
+  .prio.medium { background: var(--teal-soft); color: var(--teal); }
+  .prio.low { background: var(--line); color: var(--muted); }
+  li select { width: auto; padding: 6px 8px; font-size: 13px; }
+  .del { background: transparent; color: var(--red); padding: 6px 10px; }
+  .empty { text-align: center; color: var(--muted); padding: 32px; border: 1px dashed var(--line);
+           border-radius: 12px; }
+  footer { margin-top: 28px; font-size: 12px; color: var(--muted); }
+  footer a { color: var(--teal); }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    form { grid-template-columns: 1fr; }
+    li { grid-template-columns: auto 1fr auto; }
+    li select { grid-column: 2 / 3; justify-self: start; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Task Manager</h1>
+    <div class="health"><span class="dot" id="dot"></span><span id="health">checking…</span></div>
+  </header>
+
+  <section class="stats" aria-label="Statistics">
+    <div class="stat"><b id="s-total">0</b><span>total</span></div>
+    <div class="stat"><b id="s-todo">0</b><span>to do</span></div>
+    <div class="stat"><b id="s-in_progress">0</b><span>in progress</span></div>
+    <div class="stat"><b id="s-done">0</b><span>done</span></div>
+  </section>
+
+  <form id="form">
+    <input id="title" placeholder="New task title…" maxlength="200" aria-label="Title">
+    <select id="priority" aria-label="Priority">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+    </select>
+    <button class="primary" type="submit">Add task</button>
+    <input class="desc" id="description" placeholder="Description (optional)" aria-label="Description">
+    <p class="error" id="error"></p>
+  </form>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-status="">All</button>
+    <button class="tab" data-status="todo">To do</button>
+    <button class="tab" data-status="in_progress">In progress</button>
+    <button class="tab" data-status="done">Done</button>
+  </nav>
+
+  <ul id="list"></ul>
+
+  <footer>
+    Task Manager API · Team TaskOps (Rakhat, Danas, Nurlan) ·
+    <a href="https://github.com/Kaifovichhh/devops-task-manager">GitHub</a> ·
+    raw API: <a href="/tasks">/tasks</a>, <a href="/stats">/stats</a>, <a href="/health">/health</a>
+  </footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let filter = "";
+
+async function api(path, options = {}) {
+  const resp = await fetch(path, {
+    headers: { "Content-Type": "application/json" }, ...options,
+  });
+  if (resp.status === 204) return null;
+  const body = await resp.json();
+  if (!resp.ok) throw new Error(body.error || resp.statusText);
+  return body;
+}
+
+function esc(s) {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;",
+                                         '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+let requestId = 0;
+
+async function refresh() {
+  const id = ++requestId;
+  const query = filter ? `?status=${filter}` : "";
+  const [tasks, stats] = await Promise.all([api("/tasks" + query), api("/stats")]);
+  if (id !== requestId) return;  // a newer refresh started (fast tab switching)
+  for (const k of ["total", "todo", "in_progress", "done"]) $("s-" + k).textContent = stats[k];
+
+  const list = $("list");
+  if (!tasks.length) {
+    list.innerHTML = `<li class="empty">No tasks here yet</li>`;
+    return;
+  }
+  list.innerHTML = tasks.map((t) => `
+    <li class="${t.status === "done" ? "done" : ""}" data-id="${t.id}">
+      <input type="checkbox" class="check" ${t.status === "done" ? "checked" : ""}
+             aria-label="Mark as done">
+      <div>
+        <div class="title">${esc(t.title)}<span class="prio ${t.priority}">${t.priority}</span></div>
+        <div class="meta">#${t.id}${t.description ? " · " + esc(t.description) : ""}</div>
+      </div>
+      <select aria-label="Status">
+        ${["todo", "in_progress", "done"].map((s) =>
+          `<option value="${s}" ${s === t.status ? "selected" : ""}>${s.replace("_", " ")}</option>`
+        ).join("")}
+      </select>
+      <button class="del" aria-label="Delete">✕</button>
+    </li>`).join("");
+}
+
+async function checkHealth() {
+  try {
+    const h = await api("/health");
+    $("dot").className = "dot ok";
+    $("health").textContent = `API ${h.status} · DB ${h.database} · v${h.version}`;
+  } catch (e) {
+    $("dot").className = "dot err";
+    $("health").textContent = "API unavailable";
+  }
+}
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("error").textContent = "";
+  try {
+    await api("/tasks", { method: "POST", body: JSON.stringify({
+      title: $("title").value,
+      description: $("description").value,
+      priority: $("priority").value,
+    }) });
+    $("title").value = "";
+    $("description").value = "";
+    await refresh();
+  } catch (err) {
+    $("error").textContent = err.message;
+  }
+});
+
+$("list").addEventListener("change", async (e) => {
+  const li = e.target.closest("li[data-id]");
+  if (!li) return;
+  const status = e.target.matches(".check") ? (e.target.checked ? "done" : "todo") : e.target.value;
+  await api(`/tasks/${li.dataset.id}`, { method: "PATCH", body: JSON.stringify({ status }) });
+  await refresh();
+});
+
+$("list").addEventListener("click", async (e) => {
+  if (!e.target.matches(".del")) return;
+  const li = e.target.closest("li[data-id]");
+  await api(`/tasks/${li.dataset.id}`, { method: "DELETE" });
+  await refresh();
+});
+
+$("tabs").addEventListener("click", (e) => {
+  if (!e.target.matches(".tab")) return;
+  document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b === e.target));
+  filter = e.target.dataset.status;
+  refresh();
+});
+
+checkHealth();
+refresh();
+</script>
+</body>
+</html>

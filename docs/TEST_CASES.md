@@ -19,6 +19,7 @@ Run: `pytest -v`. All cases are automated and run in CI on every push.
 | TC-13 | Persistence | create, reopen DB file | task still present | `test_persistence_between_instances` |
 | TC-14 | Safe update | update with unknown fields | unknown fields ignored | `test_update_ignores_unknown_fields` |
 | TC-15 | Missing task | get/update/delete id=1 on empty DB | None / None / False | `test_missing_task` |
+| TC-16 | Web UI | GET `/` | 200, HTML page "Task Manager" | `test_web_ui_index` |
 
 ## Docker / CI checks
 

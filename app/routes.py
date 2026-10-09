@@ -36,6 +36,12 @@ def _validate(data, partial=False):
     return None
 
 
+@api.get("/")
+def index():
+    """Web UI: a single static page that talks to the API with fetch()."""
+    return current_app.send_static_file("index.html")
+
+
 @api.get("/health")
 def health():
     try:

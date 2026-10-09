@@ -9,6 +9,7 @@
 - [x] US-6 Persistent storage (SQLite + Docker volume)
 - [x] US-7 Automated tests in CI
 - [x] US-8 One-command run with Docker Compose
+- [x] US-10 Web UI on `/` (Sprint 2)
 
 ## Future enhancements
 - [ ] User authentication (JWT) and task assignees
@@ -17,5 +18,4 @@
 - [ ] Push the image to Docker Hub / GitHub Container Registry from CI on tag `v*`
 - [ ] Automatic deploy (CD) to a cloud VM / Render / Railway
 - [ ] Monitoring: Prometheus metrics endpoint + Grafana dashboard
-- [ ] Simple web UI (HTML/JS) on top of the API
 - [ ] Kubernetes manifests (Deployment, Service)
